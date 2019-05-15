@@ -13,7 +13,7 @@
 @import "~bootstrap/scss/transitions";
 @import "~bootstrap/scss/dropdown";
 @import "~bootstrap/scss/card";
-@import "~bootstrap/scss/tooltip";
+@import "~bootstrap/scss/list-group";
 @import "~bootstrap/scss/spinners";
 @import "~bootstrap/scss/utilities";
 
@@ -23,6 +23,15 @@ body {
     margin: $spacer 0;
 }
 
-.search-input {
-    margin-bottom: $spacer;
+@include media-breakpoint-up(sm) {
+    .card-deck .card {
+        flex: 0 0 calc(50% - 30px);
+        margin-bottom: $spacer;
+    }
+}
+
+.results-spinner {
+    @include clearfix();
+    text-align: center;
+    flex: 1 0 100%;
 }

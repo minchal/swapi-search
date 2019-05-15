@@ -1,7 +1,54 @@
-<div class="card">
-    <div class="card-body">
-        <h5 class="card-title">
-            {{ data.name }}
-        </h5>
+<div class="card-body">
+    <h4 class="card-title">
+        {{ data.name }}
+    </h4>
+
+    <div class="row">
+        <div class="col">
+            <dl class="row">
+                <dt class="col-sm-6">Birth year:</dt>
+                <dd class="col-sm-6">{{ data.birth_year }}</dd>
+        
+                <dt class="col-sm-6">Eye color:</dt>
+                <dd class="col-sm-6">{{ data.eye_color }}</dd>
+        
+                <dt class="col-sm-6">Gender:</dt>
+                <dd class="col-sm-6">{{ data.gender }}</dd>
+        
+                <dt class="col-sm-6">Hair color:</dt>
+                <dd class="col-sm-6">{{ data.hair_color }}</dd>
+            </dl>
+        </div>
+        <div class="col">
+            <dl class="row">
+                <dt class="col-sm-6">Height:</dt>
+                <dd class="col-sm-6">{{ data.height }}</dd>
+        
+                <dt class="col-sm-6">Mass:</dt>
+                <dd class="col-sm-6">{{ data.mass }}</dd>
+                
+                <dt class="col-sm-6">Skin color:</dt>
+                <dd class="col-sm-6">{{ data.skin_color }}</dd>
+            </dl>
+        </div>
     </div>
+
+
 </div>
+<ul class="list-group list-group-flush">
+    <li *ngFor="let film$ of films"
+        class="list-group-item"
+    >
+        <span *ngIf="film$|async as film; else loading">
+            {{ film.title }} ({{ film.release_date }})
+        </span>
+    </li>
+</ul>
+
+<ng-template #loading>
+    <div class="spinner-border spinner-border-sm">
+        <span class="sr-only">
+            Loading...
+        </span>
+    </div>
+</ng-template>

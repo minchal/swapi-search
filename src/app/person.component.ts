@@ -1,11 +1,25 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, HostBinding } from '@angular/core';
+import { Observable } from 'rxjs';
 
-import { Person } from './swapi.service';
+import { Person, SwapiService, Film } from './swapi.service';
 
 @Component({
     selector: 'app-person',
-    templateUrl: './person.component.html'
+    templateUrl: './person.component.html',
 })
 export class PersonComponent {
-    @Input() data: Person;
+    constructor(
+        private api: SwapiService
+    ) {}
+
+    @HostBinding('class') cssClass = 'card';
+
+    @Input()
+    set person(data: Person) {
+        this.data = data;
+        this.films = data.films.map((film) => this.api.getFilm(film));
+    }
+
+    data: Person;
+    films: Observable<Film>[];
 }

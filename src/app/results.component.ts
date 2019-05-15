@@ -20,20 +20,27 @@ export class ResultsComponent {
 
     pages: Observable<Page<Person>>[];
 
+    private addInProgress = false;
+
     @HostListener('window:scroll', ['$event'])
     bodyScroll(event: MouseEvent) {
-        if (!this.pages.length) {
+        if (!this.pages.length || this.addInProgress) {
             return;
         }
 
         const html = (event.target as Document).documentElement;
 
         if (html.offsetHeight - (html.scrollTop + html.clientHeight) <= 0) {
-            // load next page when previous last is loaded and has next
+            // prevent double loading of same page
+            this.addInProgress = true;
+
+            // load next page when last is loaded and has next
             this.pages[this.pages.length - 1].subscribe((page) => {
                 if (page.next$) {
                     this.addPage(page.next$);
                 }
+
+                this.addInProgress = false;
             });
         }
     }

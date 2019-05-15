@@ -1,11 +1,12 @@
 <div class="container">
-    <input 
-        #input
-        (keyup)="search(input.value)"
-        type="text"
-        class="form-control search-input"
-        placeholder="Start typing to search Star Wars characters..."
-        autofocus />
-
-    <app-results [firstPage]="results$|async"></app-results>
+    <div class="form-group">
+        <input 
+            #input
+            (keyup)="search(input.value)"
+            type="text"
+            class="form-control search-input"
+            placeholder="Start typing to search Star Wars characters..."
+            autofocus />
+    </div>
+    <app-results [firstPage]="results$ | async"></app-results>
 </div>

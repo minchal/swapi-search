@@ -1,16 +1,22 @@
+<p *ngIf="pages.length && pages[0]|async as page0" class="text-muted">
+    Total results: <strong>{{ page0.count }}</strong>
+</p>
+
 <div class="card-deck">
     <ng-container *ngFor="let page$ of pages">
         <ng-container *ngIf="page$|async as page; else loading">
             <app-person 
-                *ngFor="let item of page.results"
-                [data]="item"></app-person>
+                *ngFor="let result of page.results"
+                [person]="result"></app-person>
         </ng-container>
 
         <ng-template #loading>
-            <div class="spinner-border">
-                <span class="sr-only">
-                    Loading...
-                </span>
+            <div class="results-spinner">
+                <div class="spinner-border">
+                    <span class="sr-only">
+                        Loading...
+                    </span>
+                </div>
             </div>
         </ng-template>
     </ng-container>

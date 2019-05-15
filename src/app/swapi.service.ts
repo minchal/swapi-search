@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map, shareReplay } from 'rxjs/operators';
 
 /**
  * The Star Wars API [https://swapi.co/] wrapper for selected endpoints.
@@ -16,12 +17,20 @@ export class SwapiService {
     ) {}
 
     private baseUrl = 'https://swapi.co/api';
+    private cache: {[uri: string]: Observable<any>} = {};
 
     /**
      * Get (optionally filtered) paginated list of people.
      */
     getPeople({search}: {search?: string} = {}) {
         return this.resolvePage<Person>(`${this.baseUrl}/people/`, {search: search || ''});
+    }
+
+    /**
+     * Get Film object identified by URI.
+     */
+    getFilm(uri: string) {
+        return this.resolve<Film>(uri);
     }
 
     /**
@@ -42,10 +51,16 @@ export class SwapiService {
     }
 
     /**
-     * Get single object identified by URI.
+     * Get and cache single object identified by URI.
      */
     resolve<T>(uri: string) {
-        return this.http.get<T>(uri);
+        if (!this.cache[uri]) {
+            this.cache[uri] = this.http
+                .get<T>(uri)
+                .pipe(shareReplay(1));
+        }
+
+        return this.cache[uri] as Observable<T>;
     }
 }
 
