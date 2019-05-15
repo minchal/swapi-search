@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
+import { PersonComponent } from './person.component';
+import { ResultsComponent } from './results.component';
 
 @NgModule({
     imports: [
@@ -10,7 +12,9 @@ import { AppComponent } from './app.component';
         HttpClientModule,
     ],
     declarations: [
-        AppComponent
+        AppComponent,
+        PersonComponent,
+        ResultsComponent,
     ],
     providers: [],
     bootstrap: [AppComponent]

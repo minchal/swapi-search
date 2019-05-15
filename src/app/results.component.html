@@ -1,0 +1,17 @@
+<div class="card-deck">
+    <ng-container *ngFor="let page$ of pages">
+        <ng-container *ngIf="page$|async as page; else loading">
+            <app-person 
+                *ngFor="let item of page.results"
+                [data]="item"></app-person>
+        </ng-container>
+
+        <ng-template #loading>
+            <div class="spinner-border">
+                <span class="sr-only">
+                    Loading...
+                </span>
+            </div>
+        </ng-template>
+    </ng-container>
+</div>
