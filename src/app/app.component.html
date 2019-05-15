@@ -2,6 +2,7 @@
     <div class="form-group">
         <input 
             #input
+            [value]="routeParam$ | async"
             (keyup)="search(input.value)"
             type="text"
             class="form-control search-input"
