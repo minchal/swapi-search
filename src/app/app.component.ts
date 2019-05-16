@@ -19,17 +19,17 @@ export class AppComponent {
     private search$ = new Subject<string>();
 
     routeParam$ = this.route.queryParams.pipe(
-        filter(() => {
+        filter((params) => {
             // ignore params if sent after navigate call of this component
             const nav = this.router.getCurrentNavigation();
-            return !nav || !nav.extras.state || !nav.extras.state.ownNavigate;
+            return params.search && (!nav || !nav.extras.state || !nav.extras.state.ownNavigate);
         }),
         map((params) => params.search)
     );
 
     results$ = merge(
         this.search$.pipe(
-            debounceTime(200) // debounce text input search by 200ms
+            debounceTime(500) // debounce text input search by 200ms
         ),
         this.routeParam$
     ).pipe(

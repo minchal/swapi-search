@@ -23,7 +23,7 @@ export class SwapiService {
      * Get (optionally filtered) paginated list of people.
      */
     getPeople({search}: {search?: string} = {}) {
-        return this.resolvePage<Person>(`${this.baseUrl}/people/`, {search: search || ''});
+        return this.resolvePage<Person>(`${this.baseUrl}/people/`, search ? {search} : {});
     }
 
     /**
